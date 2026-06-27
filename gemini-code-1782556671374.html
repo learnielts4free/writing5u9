@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Kiểm Tra Tương Tác - Ms Lê Hằng English</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Quicksand:wght=500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #8854C0;
+            --secondary-color: #FDCB6E;
+            --accent-color: #00C9A7;
+            --correct-color: #00D26A;
+            --wrong-color: #FF4757;
+            --text-dark: #2D3436;
+            --card-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', 'Nunito', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #8854C0, #FDCB6E, #00C9A7, #FF7675);
+            background-size: 400% 400%;
+            animation: gradientMove 12s ease infinite;
+            position: relative;
+            padding: 20px 10px;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            opacity: 0.18;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M12 12l2 2-2 2-2-2zm20 8c2 0 3-1 3-3s-1-3-3-3-3 1-3 3 1 3 3 3zm15 5l2 3 3 2-3 2-2 3-2-3-3-2 3-2zm-6 20c1.5 0 2.5-1 2.5-2.5S32.5 30 31 30s-2.5 1-2.5 2.5 1 2.5 2.5 2.5zM10 45l2 2-2 2-2-2z'/%3E%3Ccircle cx='50' cy='10' r='2'/%3E%3Ccircle cx='10' cy='50' r='3'/%3E%3C/g%3E%3C/svg%3E");
+            animation: floatingPattern 25s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes floatingPattern {
+            from { background-position: 0 0; }
+            to { background-position: 600px 600px; }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 0 rgba(0,0,0,0.1);
+        }
+
+        header h2 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .alert-box {
+            background: #FFEAA7;
+            border: 3px solid #FDCB6E;
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 0 #E17055;
+            text-align: center;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        .alert-title {
+            color: #D63031;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            display: block;
+            font-weight: 900;
+        }
+
+        .section-title {
+            background: #FF7675;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 15px;
+            margin: 25px 0 12px 0;
+            display: inline-block;
+            font-weight: 900;
+            box-shadow: 0 4px 0 #D63031;
+            font-size: 1.1rem;
+        }
+
+        .quiz-card {
+            background: var(--card-bg);
+            border-radius: 22px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 0 rgba(0,0,0,0.1);
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid #E2E8F0;
+            border-radius: 15px;
+            padding: 12px 18px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 4px 0 #E2E8F0;
+            transition: transform 0.1s ease, background-color 0.2s ease;
+        }
+
+        .option-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #CBD5E1;
+            background-color: #F8FAFC;
+        }
+
+        .option-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #CBD5E1;
+        }
+
+        .option-btn.correct {
+            background-color: var(--correct-color) !important;
+            color: white !important;
+            border-color: #00B359 !important;
+            box-shadow: 0 4px 0 #00803F !important;
+        }
+
+        .option-btn.wrong {
+            background-color: var(--wrong-color) !important;
+            color: white !important;
+            border-color: #E11D48 !important;
+            box-shadow: 0 4px 0 #9F1239 !important;
+        }
+
+        .option-btn.disabled {
+            pointer-events: none;
+        }
+
+        .explanation-box {
+            margin-top: 15px;
+            background: #F8FAFC;
+            border-left: 6px solid var(--primary-color);
+            border-radius: 0 15px 15px 0;
+            padding: 15px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            display: none;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .explanation-box.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .exp-section {
+            margin-bottom: 8px;
+        }
+
+        .exp-title {
+            font-weight: 700;
+            color: #1E293B;
+            border-bottom: 1px dashed #CBD5E1;
+            padding-bottom: 2px;
+            margin-bottom: 4px;
+        }
+
+        .exp-highlight {
+            color: #2563EB;
+            font-weight: 700;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+        .shake { animation: shake 0.4s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .submit-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .btn-submit {
+            background: #FF7675;
+            color: white;
+            border: none;
+            padding: 14px 45px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #D63031;
+            transition: all 0.1s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #D63031;
+        }
+
+        .btn-submit:active {
+            transform: translateY(3px);
+            box-shadow: 0 3px 0 #D63031;
+        }
+
+        .result-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: none;
+        }
+
+        .result-content {
+            background: white;
+            border-radius: 25px;
+            padding: 30px;
+            max-width: 460px;
+            width: 90%;
+            text-align: center;
+            border: 4px solid var(--primary-color);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+        }
+
+        .result-score {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            margin-bottom: 12px;
+        }
+
+        .result-comment {
+            font-size: 1.1rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .btn-close-result {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #00A387;
+        }
+
+        #confetti-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="container">
+        <header>
+            <h2>Giáo viên tạo: Ms Lê Hằng English</h2>
+        </header>
+
+        <div class="alert-box">
+            <span class="alert-title">⚠️ LỜI NHẮC CỰC KỲ QUAN TRỌNG ⚠️</span>
+            Chỉ có đọc kỹ giải thích ngay sau mỗi câu, sau đó ghi lại từ vựng/cấu trúc mới vào vở để học thì mới thực sự giỏi lên.<br>
+            Làm cho xong mà không đọc giải thích hay đọc qua loa không ghi chép thì chỉ tốn thời gian vô ích!<br>
+            <span style="color: #00C9A7; display:block; margin-top:5px;">* Kéo tới đâu, làm tới đó! *</span>
+        </div>
+
+        <div id="quiz-container">
+            <!-- Dữ liệu được tải tự động qua kịch bản JavaScript phía dưới -->
+        </div>
+
+        <div class="submit-container">
+            <button type="button" class="btn-submit" onclick="gradeEntireQuiz()">NỘP BÀI</button>
+        </div>
+    </div>
+
+    <div class="result-overlay" id="result-modal">
+        <div class="result-content">
+            <div class="result-score" id="score-text">0/0</div>
+            <div class="result-comment" id="comment-text"></div>
+            <button class="btn-close-result" onclick="closeResultModal()">Xem lại bài học</button>
+        </div>
+    </div>
+
+    <script>
+        // --- WEB AUDIO API FOR TACTILE SOUNDS ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playSound(type) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'correct') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+            } else {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+                osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.25);
+            }
+        }
+
+        // --- HỆ THỐNG CƠ SỞ DỮ LIỆU ĐỀ BÀI HOÀN CHỈNH ---
+        const quizData = [
+            // EXERCISE 17
+            {
+                id: 1,
+                section: "Exercise 17: Reorder the words to make a correct sentence.",
+                question: "Chọn trật tự từ đúng nhất: \"We/ have/ problem/ yet./ a/ solution/ not/ the/ found/ to/\"",
+                options: [
+                    { text: "A. We have solution not found a to the problem yet.", isCorrect: false },
+                    { text: "B. We have not found a solution to the problem yet.", isCorrect: true },
+                    { text: "C. We found not have a solution to the problem yet.", isCorrect: false },
+                    { text: "D. We have not solution found to a problem yet.", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Chúng tôi vẫn chưa tìm ra giải pháp cho vấn đề này.",
+                    options: "Các hình thức sắp đặt trật tự cú pháp cho câu phủ định thì Hiện tại hoàn thành.",
+                    reason: "Công thức phủ định Hiện tại hoàn thành với trạng từ phủ định 'not' đứng ngay sau trợ động từ 'have' và đứng trước động từ phân từ hai (V3): S + have/has + not + V3 + Object + yet. Cụm từ cố định: 'a solution to the problem' (một giải pháp cho vấn đề). Do đó câu B hoàn hảo.",
+                    wrongReason: "Các phương án khác sắp xếp sai vị trí của phân từ 'found', danh từ 'solution' hoặc trạng từ 'not'."
+                }
+            },
+            {
+                id: 2,
+                section: "Exercise 17: Reorder the words to make a correct sentence.",
+                question: "Chọn trật tự từ đúng nhất: \"participated/ you/ ever/ challenging/ Have/ a/ in/ competition/ before?/\"",
+                options: [
+                    { text: "A. Have you ever participated in a challenging competition before?", isCorrect: true },
+                    { text: "B. Have you participated ever in a challenging competition before?", isCorrect: false },
+                    { text: "C. Did you ever participated in a challenging competition before?", isCorrect: false },
+                    { text: "D. Have ever you participated in a challenging competition before?", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Bạn đã từng tham gia vào một cuộc thi đầy thử thách trước đây chưa?",
+                    options: "Cấu trúc câu hỏi nghi vấn trải nghiệm cuộc sống với trạng từ 'ever'.",
+                    reason: "Công thức câu hỏi nghi vấn Hiện tại hoàn thành: Have/Has + S + ever + V3/ed? Động từ 'participate' đi kèm giới từ cố định 'in' (tham gia vào cái gì). Trạng từ 'before' thường đứng ở cuối câu hỏi trải nghiệm. Do đó câu A đúng trật tự từ chuẩn mực.",
+                    wrongReason: "B đặt 'ever' sai chỗ; C dùng sai trợ động từ 'Did' với động từ đuôi -ed; D đặt 'ever' lên trước chủ ngữ."
+                }
+            },
+            {
+                id: 3,
+                section: "Exercise 17: Reorder the words to make a correct sentence.",
+                question: "Chọn trật tự từ đúng nhất: \"schedule./ have/ completed/ successfully/ my/ of/ ahead/ project/ I/\"",
+                options: [
+                    { text: "A. I have completed successfully my project ahead of schedule.", isCorrect: false },
+                    { text: "B. I successfully have completed my project ahead of schedule.", isCorrect: false },
+                    { text: "C. I have successfully completed my project ahead of schedule.", isCorrect: true },
+                    { text: "D. I have completed my project successfully of ahead schedule.", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Tớ đã hoàn thành xuất sắc dự án của mình trước thời hạn.",
+                    options: "Vị trí đặt trạng từ chỉ cách thức 'successfully' trong thì hiện tại hoàn thành.",
+                    reason: "Trạng từ chỉ cách thức ngắn kết thúc bằng đuôi -ly thường được ưu tiên đặt ở vị trí chen giữa trợ động từ 'have/has' và động từ phân từ chính V3 'completed'. Cụm giới từ chỉ thời gian cố định: 'ahead of schedule' (trước thời hạn/lịch trình). Kết hợp lại ta được phương án C chuẩn xác.",
+                    wrongReason: "Các phương án khác đặt trạng từ sai quy tắc làm câu văn lủng củng hoặc phá hỏng cụm từ 'ahead of schedule'."
+                }
+            },
+            {
+                id: 4,
+                section: "Exercise 17: Reorder the words to make a correct sentence.",
+                question: "Chọn trật tự từ đúng nhất: \"They/ partnership/ a/ formed/ harmonious/ have/ since/ they/ met./\"",
+                options: [
+                    { text: "A. They have formed a harmonious partnership since they met.", isCorrect: true },
+                    { text: "B. They formed a harmonious partnership since they have met.", isCorrect: false },
+                    { text: "C. They have harmonious formed a partnership since they met.", isCorrect: false },
+                    { text: "D. Harmonious partnership they have formed since they met.", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Họ đã tạo dựng nên một mối quan hệ đối tác hòa hợp kể từ khi họ gặp nhau.",
+                    options: "Quy tắc phối hợp cấu trúc mệnh đề trước và sau liên từ chỉ mốc thời gian 'since'.",
+                    reason: "Mệnh đề chính đứng trước 'since' chia thì Hiện tại hoàn thành: 'They have formed a harmonious partnership' (với tính từ harmonious đứng trước bổ nghĩa danh từ partnership). Mệnh đề đi ngay sau 'since' đóng vai trò mốc thời gian chia thì Quá khứ đơn: 'they met'. Phương án A ghép nối hoàn toàn chính xác.",
+                    wrongReason: "B chia sai thì mệnh đề sau since; C đặt sai vị trí tính từ; D sai cấu trúc đảo chủ ngữ."
+                }
+            },
+            {
+                id: 5,
+                section: "Exercise 17: Reorder the words to make a correct sentence.",
+                question: "Chọn trật tự từ đúng nhất: \"I/ behavior/ seen/ haven't/ improvement/ in/ his/ lately./ any/\"",
+                options: [
+                    { text: "A. I haven't seen in his behavior any improvement lately.", isCorrect: false },
+                    { text: "B. I haven't seen any improvement in his behavior lately.", isCorrect: true },
+                    { text: "C. I lately haven't seen any improvement in his behavior.", isCorrect: false },
+                    { text: "D. Any improvement in his behavior I haven't seen lately.", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Dạo gần đây tớ không thấy có bất kỳ sự tiến bộ nào trong hành vi cư xử của cậu ấy cả.",
+                    options: "Sắp xếp từ hạn định định lượng phủ định 'any' và trạng từ chỉ thời gian 'lately'.",
+                    reason: "Cấu trúc phủ định cần từ hạn định 'any' đi trực tiếp trước danh từ làm tân ngữ chính: 'any improvement'. Cụm giới từ bổ trợ đi kèm: 'in his behavior' (trong hành vi của anh ấy). Trạng từ thời gian nhận biết 'lately' đặt ở cuối câu. Do đó chọn B.",
+                    wrongReason: "A làm tách rời động từ và tân ngữ trực tiếp; C đặt trạng từ thời gian sai vị trí; D sai cấu trúc câu trần thuật thông thường."
+                }
+            },
+            {
+                id: 6,
+                section: "Exercise 17: Reorder the words to make a correct sentence.",
+                question: "Chọn trật tự từ đúng nhất: \"We/ haven't/ received/ any/ proposal/ our/ on/ feedback/ yet./\"",
+                options: [
+                    { text: "A. We haven't received feedback any on our proposal yet.", isCorrect: false },
+                    { text: "B. We haven't received any feedback on our proposal yet.", isCorrect: true },
+                    { text: "C. We received haven't any feedback on our proposal yet.", isCorrect: false },
+                    { text: "D. On our proposal we haven't received any feedback yet.", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Chúng tôi vẫn chưa nhận được bất kỳ phản hồi nào về bản đề xuất của mình.",
+                    options: "Xác định cụm danh từ tân ngữ đi liền sau động từ hành động.",
+                    reason: "Động từ 'received' đòi hỏi tân ngữ trực tiếp đi kèm từ hạn định 'any' đứng trước danh từ không đếm được: 'any feedback'. Giới từ đi với phản hồi: 'feedback on something' (phản hồi về cái gì). Trạng từ 'yet' chốt cuối câu phủ định. Chọn B.",
+                    wrongReason: "Các đáp án khác xếp từ hạn định 'any' sai vị trí hoặc làm đảo lộn cấu trúc động từ chính."
+                }
+            },
+            {
+                id: 7,
+                section: "Exercise 17: Reorder the words to make a correct sentence.",
+                question: "Chọn trật tự từ đúng nhất: \"community./ for/ recently/ received/ an/ contributions/ He/ his/ outstanding/ award/ to/ the/ has/\"",
+                options: [
+                    { text: "A. He recently has received an award for his outstanding contributions to the community.", isCorrect: false },
+                    { text: "B. He has recently received an award for his outstanding contributions to the community.", isCorrect: true },
+                    { text: "C. He has received an award recently for his outstanding community to the contributions.", isCorrect: false },
+                    { text: "D. An award for his outstanding contributions to the community he has recently received.", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Gần đây anh ấy đã nhận được một giải thưởng vì những đóng góp xuất sắc của mình cho cộng đồng.",
+                    options: "Sắp xếp trật tự tổ hợp tính từ - danh từ và cụm giới từ chỉ nguyên nhân.",
+                    reason: "Trạng từ 'recently' nằm giữa 'has' và 'received'. Cấu trúc nhận giải thưởng vì lý do gì: 'an award for something'. Cụm danh từ: 'his outstanding contributions' (những đóng góp xuất sắc của anh ấy). Giới từ đi kèm danh từ đóng góp: 'contributions to the community' (đóng góp cho cộng đồng). Ghép chuỗi logic ta được câu B chuẩn chỉnh.",
+                    wrongReason: "A đặt vị trí trạng từ sai; C đổi chỗ lộn xộn nghĩa của từ community và contributions; D đảo ngữ sai cấu trúc cơ bản."
+                }
+            },
+            {
+                id: 8,
+                section: "Exercise 17: Reorder the words to make a correct sentence.",
+                question: "Chọn trật tự từ đúng nhất: \"Have/ you/ skydiving/ tried/ or/ other/ any/ extreme/ ever/ sports?/\"",
+                options: [
+                    { text: "A. Have you ever tried skydiving or any other extreme sports?", isCorrect: true },
+                    { text: "B. Have you tried ever skydiving or any other extreme sports?", isCorrect: false },
+                    { text: "C. Have you ever tried any other extreme sports or skydiving?", isCorrect: false, comment: "Xét theo cấu trúc sắp xếp mượt mà tự nhiên của đề" },
+                    { text: "D. Ever have you tried skydiving or any other extreme sports?", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Bạn đã từng thử trò nhảy dù hay bất kỳ môn thể thao mạo hiểm nào khác chưa?",
+                    options: "Xác định cấu trúc câu hỏi lựa chọn song hành với liên từ 'or'.",
+                    reason: "Công thức câu hỏi trải nghiệm: Have + you + ever + V3 (tried). Liên từ 'or' dùng để kết nối hai danh từ/cụm danh từ song hành: danh từ thứ nhất 'skydiving' (môn nhảy dù), danh từ thứ hai đi kèm từ hạn định 'any other extreme sports' (bất kỳ môn thể thao mạo hiểm nào khác). Đáp án A bám sát và phản ánh đúng mạch từ gợi ý nhất.",
+                    wrongReason: "B và D đặt trạng từ tần suất 'ever' sai vị trí nghiêm trọng so với cấu trúc nghi vấn Hiện tại hoàn thành."
+                }
+            },
+
+            // EXERCISE 18
+            {
+                id: 9,
+                section: "Exercise 18: Write the correct sentences using the suggested words. Use the present perfect tense.",
+                question: "Viết câu hoàn chỉnh: \"I/ already/ speak/ to the manager/ about the issue.\"",
+                options: [
+                    { text: "A. I already spoke to the manager about the issue.", isCorrect: false },
+                    { text: "B. I have already spoken to the manager about the issue.", isCorrect: true },
+                    { text: "C. I have already speak to the manager about the issue.", isCorrect: false },
+                    { text: "D. I spoke to the manager already on the issue.", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Tớ đã nói chuyện với quản lý về vấn đề này rồi.",
+                    options: "Yêu cầu chia thì Hiện tại hoàn thành với trạng từ nhấn mạnh 'already'.",
+                    reason: "Yêu cầu đề bài bắt buộc sử dụng thì Hiện tại hoàn thành (Present Perfect). Chủ từ 'I' đi với trợ động từ 'have'. Trạng từ 'already' đứng ở giữa. Động từ bất quy tắc 'speak' chuyển về phân từ hai V3 thành 'spoken'. Do đó phương án B chính xác.",
+                    wrongReason: "A và D dùng thì quá khứ đơn sai yêu cầu đề bài; C chưa chuyển động từ chính về dạng phân từ hai V3."
+                }
+            },
+            {
+                id: 10,
+                section: "Exercise 18: Write the correct sentences using the suggested words. Use the present perfect tense.",
+                question: "Viết câu hoàn chỉnh: \"He/ play/ guitar/ since/ he/ to be/ child.\"",
+                options: [
+                    { text: "A. He plays the guitar since he was a child.", isCorrect: false },
+                    { text: "B. He has played the guitar since he is a child.", isCorrect: false },
+                    { text: "C. He has played the guitar since he was a child.", isCorrect: true },
+                    { text: "D. He was played the guitar since he was a child.", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Anh ấy đã chơi đàn ghi-ta kể từ khi anh ấy còn là một đứa trẻ.",
+                    options: "Phối hợp chia động từ mệnh đề chính và mệnh đề mốc thời gian đi với 'since'.",
+                    reason: "Mệnh đề chính trước 'since' chia Hiện tại hoàn thành với chủ ngữ số ít 'He' -> 'has played'. Đừng quên thêm mạo từ 'the' trước tên nhạc cụ 'the guitar'. Mệnh đề đi liền sau liên từ 'since' đóng vai trò mốc thời gian trong quá khứ bắt buộc chia thì Quá khứ đơn -> 'he was a child'. Chọn C.",
+                    wrongReason: "A dùng hiện tại đơn; B dùng hiện tại đơn ở vế sau; D dùng thể bị động 'was played' sai bản chất ngữ nghĩa hành động."
+                }
+            },
+            {
+                id: 11,
+                section: "Exercise 18: Write the correct sentences using the suggested words. Use the present perfect tense.",
+                question: "Viết câu hoàn chỉnh: \"The restaurant/ recently/ open/ our/ neighborhood.\"",
+                options: [
+                    { text: "A. The restaurant recently opened in our neighborhood.", isCorrect: false },
+                    { text: "B. The restaurant has recently opened in our neighborhood.", isCorrect: true },
+                    { text: "C. The restaurant has recently open in our neighborhood.", isCorrect: false },
+                    { text: "D. The restaurant recently opens in our neighborhood.", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Nhà hàng đó gần đây đã khai trương ở trong khu phố của chúng tôi.",
+                    options: "Chia động từ số ít đi với trạng từ nhận biết 'recently'.",
+                    reason: "Trạng từ 'recently' (gần đây) chỉ hành động vừa mới xảy ra kéo theo hệ quả ở hiện tại -> Chia Hiện tại hoàn thành. Chủ ngữ số ít 'The restaurant' đi với 'has recently opened' (thêm đuôi -ed vào động từ thường open). Thêm giới từ vị trí 'in' trước cụm nơi chốn 'our neighborhood'. Chọn B.",
+                    wrongReason: "A dùng quá khứ đơn; C quên thêm đuôi -ed cho phân từ hai; D dùng hiện tại đơn."
+                }
+            },
+            {
+                id: 12,
+                section: "Exercise 18: Write the correct sentences using the suggested words. Use the present perfect tense.",
+                question: "Viết câu hoàn chỉnh: \"She/ already/ visit/ three/ different/ countries/ this year.\"",
+                options: [
+                    { text: "A. She has already visited three different countries this year.", isCorrect: true },
+                    { text: "B. She already visited three different countries this year.", isCorrect: false },
+                    { text: "C. She is already visiting three different countries this year.", isCorrect: false },
+                    { text: "D. She has already been visiting three different countries this year.", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Cô ấy đã ghé thăm ba quốc gia khác nhau trong năm nay rồi.",
+                    options: "Xem xét cấu trúc tích lũy số lượng hành động trong một khoảng thời gian chưa kết thúc.",
+                    reason: "Cụm thời gian 'this year' (năm nay - thời gian chưa qua hết) kết hợp trạng từ nhấn mạnh kết quả 'already' yêu cầu chia thì Hiện tại hoàn thành để chỉ tính tích lũy số lượng thành tích đạt được. Ngôi số ít 'She' + has already visited. Chọn A.",
+                    wrongReason: "B dùng quá khứ đơn; C dùng hiện tại tiếp diễn; D dùng hoàn thành tiếp diễn không tối ưu cho việc nhấn mạnh con số số lượng kết quả 'three different countries'."
+                }
+            },
+            {
+                id: 13,
+                section: "Exercise 18: Write the correct sentences using the suggested words. Use the present perfect tense.",
+                question: "Viết câu hoàn chỉnh: \"I/ not/ receive/ any/ response/ my/ job application.\"",
+                options: [
+                    { text: "A. I haven't received any response to my job application.", isCorrect: true },
+                    { text: "B. I didn't receive any response to my job application.", isCorrect: false },
+                    { text: "C. I not receive any response to my job application yet.", isCorrect: false },
+                    { text: "D. I haven't been receiving any response to my job application.", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Tớ vẫn chưa nhận được bất kỳ phản hồi nào cho đơn xin việc của mình cả.",
+                    options: "Xác định dạng phủ định hiện tại hoàn thành và giới từ đi kèm danh từ response.",
+                    reason: "Để diễn tả sự việc chưa từng xảy ra tính đến thời điểm hiện tại, ta dùng thì Hiện tại hoàn thành thể phủ định: I + haven't received. Giới từ cố định đi sau danh từ phản hồi: 'response to something' (phản hồi đối với cái gì). Kết hợp lại ta được phương án A chuẩn xác.",
+                    wrongReason: "B dùng quá khứ đơn; C viết thiếu hẳn trợ động từ; D dùng thể hoàn thành tiếp diễn sai bản chất hành động nhận thông tin tức thời."
+                }
+            },
+            {
+                id: 14,
+                section: "Exercise 18: Write the correct sentences using the suggested words. Use the present perfect tense.",
+                question: "Viết câu hoàn chỉnh: \"you/ ever/ travel/ foreign country/ and/ experience/ its/ different/ cultures?\"",
+                options: [
+                    { text: "A. Did you ever travel to a foreign country and experienced its different cultures?", isCorrect: false },
+                    { text: "B. Have you ever traveled to a foreign country and experienced its different cultures?", isCorrect: true },
+                    { text: "C. Have you ever traveling to a foreign country and experienced its different cultures?", isCorrect: false },
+                    { text: "D. Have you traveled ever to a foreign country and experienced its different cultures?", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Bạn đã từng bao giờ đi du lịch đến một quốc gia nước ngoài và trải nghiệm những nền văn hóa khác nhau của nơi đó chưa?",
+                    options: "Cấu trúc hỏi trải nghiệm cuộc sống song hành hai động từ phân từ hai V3.",
+                    reason: "Trạng từ 'ever' báo hiệu câu hỏi trải nghiệm ở thì Hiện tại hoàn thành: Have + you + ever + V3. Hai động từ 'travel' (thêm giới từ hướng đến: 'travel to a foreign country') và 'experience' đẳng lập song hành nối với nhau qua chữ 'and' nên cả hai đều phải chia ở dạng phân từ hai V3 -> 'traveled... and experienced'. Do đó chọn B.",
+                    wrongReason: "A dùng sai trợ động từ quá khứ đơn; C sai dạng động từ đuôi -ing; D đặt sai vị trí trạng từ 'ever'."
+                }
+            },
+            {
+                id: 15,
+                section: "Exercise 18: Write the correct sentences using the suggested words. Use the present perfect tense.",
+                question: "Viết câu hoàn chỉnh: \"She/ not/ achieve/ goals/ despite/ efforts.\"",
+                options: [
+                    { text: "A. She didn't achieve her goals despite her efforts.", isCorrect: false },
+                    { text: "B. She hasn't achieved her goals despite her efforts.", isCorrect: true },
+                    { text: "C. She hasn't achieve her goals despite her efforts.", isCorrect: false },
+                    { text: "D. She hasn't been achieving her goals despite her efforts.", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Cô ấy vẫn chưa đạt được các mục tiêu của mình bất chấp những sự nỗ lực.",
+                    options: "Bổ sung tính từ sở hữu phù hợp nghĩa và chia phân từ hai phủ định.",
+                    reason: "Áp dụng cấu trúc phủ định hiện tại hoàn thành ngôi số ít: 'She hasn't achieved' (động từ achieve thêm đuôi -ed thành phân từ hai). Cần thêm tính từ sở hữu 'her' trước các danh từ 'goals' và 'efforts' để câu văn rõ nghĩa tự nhiên. Chọn B.",
+                    wrongReason: "A dùng quá khứ đơn; C quên chia đuôi -ed cho động từ phân từ hai; D dùng hoàn thành tiếp diễn không hợp lý."
+                }
+            },
+            {
+                id: 16,
+                section: "Exercise 18: Write the correct sentences using the suggested words. Use the present perfect tense.",
+                question: "Viết câu hoàn chỉnh: \"you/ ever/ step out/ your/ comfort zone/ and/ try/ other/ international/ cuisine?\"",
+                options: [
+                    { text: "A. Did you ever step out of your comfort zone and try other international cuisines?", isCorrect: false },
+                    { text: "B. Have you ever stepped out of your comfort zone and tried other international cuisines?", isCorrect: true },
+                    { text: "C. Have you ever step out of your comfort zone and tried other international cuisines?", isCorrect: false },
+                    { text: "D. You ever stepped out of your comfort zone and tried other international cuisines?", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Bạn đã từng bao giờ bước ra khỏi vùng an toàn của mình và nếm thử các nền ẩm thực quốc tế khác chưa?",
+                    options: "Phối hợp cụm giới từ cố định và cấu trúc hỏi trải nghiệm song hành động từ.",
+                    reason: "Câu hỏi trải nghiệm với 'ever' chia Hiện tại hoàn thành: Have + you + ever + V3. Cụm động từ đi kèm giới từ di chuyển: 'step out of something' (bước ra khỏi cái gì) -> 'stepped out of your comfort zone'. Hai động từ song hành nối bằng 'and' đều đưa về dạng V3 -> 'stepped... and tried'. Danh từ cuisine chuyển số nhiều khái quát hóa. Chọn B.",
+                    wrongReason: "A dùng quá khứ đơn; C giữ nguyên từ 'step' chưa đưa về dạng phân từ hai V3; D viết thiếu trợ động từ Have đầu câu hỏi."
+                }
+            },
+
+            // EXERCISE 19
+            {
+                id: 17,
+                section: "Exercise 19: Write a second sentence so that it has a similar meaning to the first. Use the words in brackets.",
+                question: "Viết lại câu đồng nghĩa: \"I started working at this hotel six months ago.\" (worked) 🡺 I've...",
+                options: [
+                    { text: "A. I've worked at this hotel since six months.", isCorrect: false },
+                    { text: "B. I've worked at this hotel for six months.", isCorrect: true },
+                    { text: "C. I've been worked at this hotel for six months.", isCorrect: false },
+                    { text: "D. I've worked at this hotel six months ago.", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Gốc: Tớ đã bắt đầu làm việc tại khách sạn này 6 tháng trước.<br>Viết lại: Tớ đã làm việc tại khách sạn này được 6 tháng rồi.",
+                    options: "Chuyển đổi câu từ thì Quá khứ đơn sang thì Hiện tại hoàn thành sử dụng giới từ 'for'.",
+                    reason: "Quy tắc biến đổi kinh điển: S + started + V-ing + thời gian + ago 🡪 S + have/has + V3/ed + for + khoảng thời gian. 'six months' là một khoảng thời gian dài 6 tháng nên ta sử dụng giới từ 'for' thay vì trạng từ ago hay since. Do đó câu B chuẩn xác.",
+                    wrongReason: "A dùng sai 'since' với khoảng thời gian; C chia sai thể bị động; D giữ nguyên từ 'ago' của thì quá khứ đơn là sai ngữ pháp."
+                }
+            },
+            {
+                id: 18,
+                section: "Exercise 19: Write a second sentence so that it has a similar meaning to the first. Use the words in brackets.",
+                question: "Viết lại câu đồng nghĩa: \"Susan has been in Italy for the last three weeks.\" (went) 🡺 Susan...",
+                options: [
+                    { text: "A. Susan went to Italy since three weeks.", isCorrect: false },
+                    { text: "B. Susan went to Italy three weeks ago.", isCorrect: true },
+                    { text: "C. Susan has gone to Italy three weeks ago.", isCorrect: false },
+                    { text: "D. Susan went in Italy for three weeks ago.", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Gốc: Susan đã ở Ý được ba tuần qua rồi.<br>Viết lại: Susan đã đi đến Ý vào ba tuần trước.",
+                    options: "Chuyển đổi từ Hiện tại hoàn thành đi với 'for' sang Quá khứ đơn đi với 'ago'.",
+                    reason: "Câu gốc sử dụng hiện tại hoàn thành diễn tả trạng thái ở Ý kéo dài được 3 tuần. Khi đề bài yêu cầu dùng động từ hành động ngắn 'went' (quá khứ đơn của go), ta phải chuyển sang cấu trúc điểm mốc thời gian quá khứ kết thúc bằng trạng từ 'ago': S + went + to + địa điểm + khoảng thời gian + ago. Chọn B.",
+                    wrongReason: "Các đáp án khác phối hợp sai giới từ hướng đến hoặc dùng sai thì hiện tại hoàn thành với từ ago."
+                }
+            },
+            {
+                id: 19,
+                section: "Exercise 19: Write a second sentence so that it has a similar meaning to the first. Use the words in brackets.",
+                question: "Viết lại câu đồng nghĩa: \"I met her during my stay in England last summer.\" (while) 🡺 I met her...",
+                options: [
+                    { text: "A. I met her while I stayed in England last summer.", isCorrect: false },
+                    { text: "B. I met her while I was staying in England last summer.", isCorrect: true },
+                    { text: "C. I met her while my stay in England last summer.", isCorrect: false },
+                    { text: "D. I met her while I had been staying in England last summer.", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Gốc: Tớ đã gặp cô ấy trong suốt thời gian tớ lưu trú ở Anh vào mùa hè năm ngoái.<br>Viết lại: Tớ đã gặp cô ấy trong khi tớ đang lưu trú ở nước Anh vào mùa hè năm ngoái.",
+                    options: "Chuyển đổi cụm giới từ chứa 'during' thành mệnh đề hành động nền chứa 'while'.",
+                    reason: "Giới từ 'during' đi trực tiếp với cụm danh từ ('during my stay'). Khi biến đổi sang liên từ 'while', phía sau cần một mệnh đề diễn tả quá trình kéo dài làm nền trong quá khứ -> chia thì Quá khứ tiếp diễn: 'while I was staying in England...'. Hành động gặp bất chợt cắt ngang giữ nguyên quá khứ đơn 'I met her'. Chọn B.",
+                    wrongReason: "A dùng quá khứ đơn chưa làm nổi bật tiến trình nền kéo dài; C dùng danh từ trực tiếp sau while là sai cú pháp; D dùng quá khứ hoàn thành tiếp diễn không cần thiết."
+                }
+            },
+            {
+                id: 20,
+                section: "Exercise 19: Write a second sentence so that it has a similar meaning to the first. Use the words in brackets.",
+                question: "Viết lại câu đồng nghĩa: \"We haven't gone to the cinema for over a year.\" (It's) 🡺 It's...",
+                options: [
+                    { text: "A. It's over a year since we didn't go to the cinema.", isCorrect: false },
+                    { text: "B. It's over a year since we went to the cinema.", isCorrect: true },
+                    { text: "C. It's over a year since we have gone to the cinema.", isCorrect: false },
+                    { text: "D. It's over a year for we went to the cinema.", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Gốc: Chúng tớ đã không đi đến rạp chiếu phim trong hơn một năm rồi.<br>Viết lại: Đã hơn một năm trôi qua kể từ lần cuối chúng tớ đi xem phim.",
+                    options: "Áp dụng cấu trúc nhấn mạnh khoảng thời gian trôi qua tính từ lần cuối thực hiện hành động.",
+                    reason: "Công thức chuyển đổi cố định tương đương nghĩa: S + haven't/hasn't + V3 + for + khoảng thời gian 🡪 It is / It's + khoảng thời gian + since + S + V2/ed (mệnh đề khẳng định ở thì quá khứ đơn). Do đó động từ 'go' chuyển thành dạng khẳng định quá khứ đơn là 'went'. Chọn B.",
+                    wrongReason: "A dùng thể phủ định là sai logic ngữ nghĩa câu; C dùng hiện tại hoàn thành vế sau; D dùng sai giới từ kết nối."
+                }
+            },
+            {
+                id: 21,
+                section: "Exercise 19: Write a second sentence so that it has a similar meaning to the first. Use the words in brackets.",
+                question: "Viết lại câu đồng nghĩa: \"Sam played tennis yesterday and it was his first game.\" (never) 🡺 Sam...",
+                options: [
+                    { text: "A. Sam has never played tennis before yesterday.", isCorrect: false },
+                    { text: "B. Sam had never played tennis before.", isCorrect: true },
+                    { text: "C. Sam never played tennis before yesterday.", isCorrect: false },
+                    { text: "D. Sam had never been playing tennis before.", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Gốc: Sam đã chơi quần vợt ngày hôm qua và đó là trận đấu đầu tiên của cậu ấy.<br>Viết lại: Trước đây Sam chưa từng bao giờ chơi quần vợt cả.",
+                    options: "Dùng thì Quá khứ hoàn thành diễn tả trải nghiệm tính đến một thời điểm trong quá khứ.",
+                    reason: "Vì cột mốc trận đấu diễn ra vào hôm qua ('yesterday' - đã thuộc về quá khứ) và đó là lần đầu tiên, nghĩa là tính cho đến trước mốc quá khứ hôm qua, cậu ấy chưa từng chơi bao giờ. Hành động xảy ra trước một thời điểm quá khứ phải chia thì Quá khứ hoàn thành: S + had + never + V3 + before. Do đó câu B chính xác.",
+                    wrongReason: "A dùng hiện tại hoàn thành sai mốc nền quá khứ; C dùng quá khứ đơn chưa bám sát bản chất lùi thì tiền quá khứ."
+                }
+            },
+
+            // EXERCISE 20
+            {
+                id: 22,
+                section: "Exercise 20: Choose the best second sentence so that it has a similar meaning to the first one.",
+                question: "Chọn câu đồng nghĩa: \"He started working as a computer programmer five years ago.\"",
+                options: [
+                    { text: "A. He works as a computer programmer five years ago.", isCorrect: false },
+                    { text: "B. He was working as a computer programmer five years ago.", isCorrect: false },
+                    { text: "C. He has started working as a computer programmer for five years.", isCorrect: false },
+                    { text: "D. He has worked as a computer programmer for five years.", isCorrect: true }
+                ],
+                explanation: {
+                    translation: "Gốc: Anh ấy đã bắt đầu làm việc với tư cách là một lập trình viên máy tính 5 năm trước.<br>Đáp án: Anh ấy đã làm việc như một lập trình viên máy tính được 5 năm rồi.",
+                    options: "Chuyển đổi hành động bắt đầu trong quá khứ thành trạng thái kéo dài ở hiện tại hoàn thành.",
+                    reason: "Quy tắc cốt lõi: S + started + V-ing + khoảng thời gian + ago 🡪 S + have/has + V3/ed (bỏ chữ start đi và lấy động từ chính phía sau chia hoàn thành) + for + khoảng thời gian. Động từ chính 'work' chuyển thành 'has worked', khoảng thời gian đổi thành 'for five years'. Chọn D.",
+                    wrongReason: "A dùng sai thì hiện tại với trạng từ quá khứ; B dùng quá khứ tiếp diễn sai bản chất; C dùng sai ngữ pháp khi nhét từ 'started' đi chung với khoảng thời gian kéo dài 'for five years'."
+                }
+            },
+            {
+                id: 23,
+                section: "Exercise 20: Choose the best second sentence so that it has a similar meaning to the first one.",
+                question: "Chọn câu đồng nghĩa: \"The last time Mai travelled to Europe was two years ago.\"",
+                options: [
+                    { text: "A. Mai last time travelled to Europe two years ago.", isCorrect: false },
+                    { text: "B. It has been two years since Mai last travelled to Europe.", isCorrect: true },
+                    { text: "C. Mai haven’t travelled to Europe for two years.", isCorrect: false },
+                    { text: "D. Mai began travelling to Europe two years ago.", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Gốc: Lần cuối cùng Mai đi du lịch sang châu Âu là cách đây 2 năm.<br>Đáp án: Đã được hai năm trôi qua kể từ lần cuối cùng Mai đi du lịch châu Âu.",
+                    options: "Các công thức viết lại câu tương đương của cụm cấu trúc chỉ lần cuối cùng 'The last time'.",
+                    reason: "Công thức gốc: The last time + S + V2/ed + was + khoảng thời gian + ago.<br>Công thức biến đổi đồng nghĩa lý tưởng: It has been + khoảng thời gian + since + S + (last) + V2/ed. Áp dụng vào ta có câu B hoàn toàn trùng khớp ngữ pháp học thuật.",
+                    wrongReason: "A sai vị trí từ ngữ; C chia sai trợ động từ 'haven't' đi với ngôi số ít Mai (nếu là hasn't mới đúng); D làm đổi lệch nghĩa thành bắt đầu đi du lịch."
+                }
+            },
+            {
+                id: 24,
+                section: "Exercise 20: Choose the best second sentence so that it has a similar meaning to the first one.",
+                question: "Chọn câu đồng nghĩa: \"When did she begin to write her second novel?\"",
+                options: [
+                    { text: "A. When has she written her second novel?", isCorrect: false },
+                    { text: "B. How long has she started writing her second novel?", isCorrect: false },
+                    { text: "C. How long has she written her second novel?", isCorrect: true },
+                    { text: "D. When did she last write her second novel?", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Gốc: Cô ấy đã bắt đầu viết cuốn tiểu thuyết thứ hai của mình từ khi nào thế?<br>Đáp án: Cô ấy đã viết cuốn tiểu thuyết thứ hai của mình được bao lâu rồi?",
+                    options: "Chuyển đổi câu hỏi thời điểm 'When' sang câu hỏi tổng khoảng thời gian 'How long'.",
+                    reason: "Quy tắc chuyển đổi câu hỏi: When + did + S + start/begin + to-V...? 🡪 How long + have/has + S + V3/ed...? (bỏ hẳn động từ start/begin đi, lấy động từ hành động chính chuyển về phân từ hai V3). Do đó 'write' biến đổi thành 'has she written'. Phương án C hoàn toàn chính xác.",
+                    wrongReason: "A dùng từ hỏi when với hiện tại hoàn thành là sai ngữ pháp; B giữ lại từ 'started' đi chung với how long là lỗi cấu trúc nghiêm trọng; D làm đổi nghĩa thành lần cuối cùng viết sách."
+                }
+            },
+
+            // EXERCISE 21
+            {
+                id: 25,
+                section: "Exercise 21: Arrange the following sentences into a meaningful paragraph/letter.",
+                question: "Sắp xếp trật tự các câu sau để tạo thành một bức thư có nghĩa mạch lạc:<br>a. Do you remember our trip to Da Lat?...<br>b. Best wishes, Thanh<br>c. And of course, our time in Mui Ne was amazing...<br>d. I'm hoping we can get together again soon...<br>e. Dear Sarah, I hope this letter finds you well. It feels like ages...",
+                options: [
+                    { text: "A. e – d – a – b – c", isCorrect: false },
+                    { text: "B. d – b – a – c – e", isCorrect: false },
+                    { text: "C. e – a – c – d – b", isCorrect: true },
+                    { text: "D. b – c – e – a – d", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Bức thư hoàn chỉnh: 'Sarah thân mến, tớ hy vọng thư này đến tay cậu khi cậu vẫn khỏe. Cảm giác như đã lâu lắm rồi kể từ lần cuối chúng mình trò chuyện, và tớ cứ nghĩ mãi về những niềm vui tụi mình đã có trong các chuyến đi. Cậu có nhớ chuyến đi Đà Lạt của chúng mình không? Những vườn hoa thật lộng lẫy... Và dĩ nhiên, thời gian ở Mũi Né cũng tuyệt vời không kém... Tớ hy vọng chúng mình sớm tụ tập lại. Hãy viết thư lại cho tớ khi có thể nhé. Thân ái, Thanh.'",
+                    options: "Phân tích kết cấu chuẩn mực của một bức thư cá nhân thân mật.",
+                    reason: "1. Bức thư bắt buộc phải mở đầu bằng lời chào trang trọng/thân mật: câu (e) 'Dear Sarah, I hope this letter finds you well...'.<br>2. Tiếp theo triển khai mạch hoài niệm chuyến đi đầu tiên ở Đà Lạt: câu (a) 'Do you remember our trip to Da Lat?...'.<br>3. Kết nối liên từ phát triển sang chuyến đi thứ hai ở Mũi Né bằng từ nối phụ trợ: câu (c) 'And of course, our time in Mui Ne...'.<br>4. Đưa ra lời hẹn ước tương lai trước khi khép thư: câu (d) 'I'm hoping we can get together again soon...'.<br>5. Cuối cùng kết thúc bằng lời chào ký tên cuối thư: câu (b) 'Best wishes, Thanh'. Do đó trật tự chuẩn là e – a – c – d – b.",
+                    wrongReason: "Các phương án khác đưa lời chào kết thúc (b) hoặc lời hẹn tương lai (d) lên đầu đoạn làm mất tính mạch lạc bố cục thư."
+                }
+            },
+
+            // EXERCISE 22
+            {
+                id: 26,
+                section: "Exercise 22: Mark the letter A, B, C or D to indicate the correct answer to each of the following questions.",
+                question: "The club is planning a fantastic trip for all members next week. It's a great opportunity to get away from the city and enjoy nature. _____________.<br>Sắp xếp trật tự câu (a-c) để điền vào khoảng trống trên thành đoạn văn hợp logic:<br>a. It will also be an awesome chance to meet and relax...<br>b. The outing is planned for next Sunday, and we're heading to a beautiful park...<br>c. Once we're there, we'll have a fun picnic, play some team games...",
+                options: [
+                    { text: "A. a - b – c", isCorrect: false },
+                    { text: "B. b - c – a", isCorrect: true },
+                    { text: "C. c - a – b", isCorrect: false },
+                    { text: "D. b - a - c", isCorrect: false }
+                ],
+                explanation: {
+                    translation: "Đoạn văn logic: 'Câu lạc bộ đang lên kế hoạch cho một chuyến đi tuyệt vời cho tất cả thành viên vào tuần tới. Đó là cơ hội tuyệt vời để rời xa thành phố và tận hưởng thiên nhiên. (b) Chuyến dã ngoại được lên kế hoạch vào Chủ nhật tới, và chúng tôi sẽ hướng đến một công viên xinh đẹp ngoài thành phố. (c) Khi chúng tôi đến đó, chúng tôi sẽ có một buổi dã ngoại vui vẻ, chơi một số trò chơi đồng đội... (a) Đó cũng sẽ là một cơ hội tuyệt vời để gặp gỡ và thư giãn với những người bạn mới và cũ.'",
+                    options: "Bám sát logic phát triển từ tổng quan lịch trình đến chi tiết hoạt động tại thực địa.",
+                    reason: "Sau câu giới thiệu về kế hoạch đi chơi chung chung ở đề bài, câu (b) tiếp nối tự nhiên bằng cách đưa ra mốc lịch trình cụ thể đầu tiên và địa điểm chính xác ('planned for next Sunday... heading to a beautiful park'). Tiếp theo, cụm trạng từ chỉ vị trí ở câu (c) 'Once we're there' (Một khi chúng tôi đã ở ĐÓ) bắt nối trực tiếp chữ 'park' của câu b để liệt kê hoạt động ăn chơi vui vẻ. Cuối cùng câu (a) đóng vai trò đúc kết thêm giá trị tinh thần giao lưu kết bạn. Trật tự hoàn hảo là b - c - a.",
+                    wrongReason: "Đặt câu (c) lên trước câu (b) làm đại từ chỉ vị trí cụ thể 'there' bị vô nghĩa vì chưa giới thiệu địa điểm công viên trước đó."
+                }
+            }
+        ];
+
+        // --- KHỞI TẠO VÀ SINH TỰ ĐỘNG GIAO DIỆN PHẦN MỀM ---
+        const container = document.getElementById('quiz-container');
+        let currentSectionName = "";
+
+        function shuffleOptions(options) {
+            let shuffled = [...options];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        quizData.forEach((q, index) => {
+            if (q.section !== currentSectionName) {
+                currentSectionName = q.section;
+                const secTitle = document.createElement('div');
+                secTitle.className = 'section-title';
+                secTitle.innerText = currentSectionName;
+                container.appendChild(secTitle);
+            }
+
+            const card = document.createElement('div');
+            card.className = 'quiz-card';
+            card.id = `card-${q.id}`;
+
+            const shuffledOpts = shuffleOptions(q.options);
+            let optionsHtml = '';
+            shuffledOpts.forEach(opt => {
+                optionsHtml += `<button class="option-btn" data-correct="${opt.isCorrect}" onclick="selectOption(this, ${q.id})">${opt.text}</button>`;
+            });
+
+            card.innerHTML = `
+                <div class="question-text"><strong>Câu ${index + 1}:</strong><br>${q.question}</div>
+                <div class="options-container">${optionsHtml}</div>
+                <div class="explanation-box" id="exp-${q.id}">
+                    <div class="exp-section"><div class="exp-title">🌟 Dịch nghĩa câu hoàn chỉnh:</div><div class="exp-text">${q.explanation.translation}</div></div>
+                    <div class="exp-section"><div class="exp-title">💎 Phân tích bản chất cấu trúc từ:</div><div class="exp-text">${q.explanation.options}</div></div>
+                    <div class="exp-section"><div class="exp-title">✅ Tại sao chọn đáp án này?</div><div class="exp-text exp-highlight">${q.explanation.reason}</div></div>
+                    <div class="exp-section"><div class="exp-title">❌ Bản chất lỗi sai các câu khác:</div><div class="exp-text">${q.explanation.wrongReason}</div></div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        // --- ĐIỀU HƯỚNG BẤM CHỌN ĐÁP ÁN ---
+        function selectOption(btn, qId) {
+            const card = document.getElementById(`card-${qId}`);
+            if (card.getAttribute('data-answered') === 'true') return;
+
+            const buttons = card.querySelectorAll('.option-btn');
+            const isCorrect = btn.getAttribute('data-correct') === 'true';
+
+            buttons.forEach(b => {
+                b.classList.add('disabled');
+                if (b.getAttribute('data-correct') === 'true') {
+                    b.classList.add('correct');
+                }
+            });
+
+            if (isCorrect) {
+                btn.classList.add('correct');
+                playSound('correct');
+                createConfetti();
+            } else {
+                btn.classList.add('wrong');
+                card.classList.add('shake');
+                playSound('wrong');
+                setTimeout(() => card.classList.remove('shake'), 400);
+            }
+
+            document.getElementById(`exp-${qId}`).classList.add('active');
+            card.setAttribute('data-answered', 'true');
+            card.setAttribute('data-score', isCorrect ? '1' : '0');
+        }
+
+        // --- HỆ THỐNG TỔNG HỢP VÀ CHẤM ĐIỂM TOÀN BÀI ---
+        function gradeEntireQuiz() {
+            let totalQuestions = quizData.length;
+            let correctCount = 0;
+            let unansweredCount = 0;
+
+            quizData.forEach(q => {
+                const card = document.getElementById(`card-${q.id}`);
+                const score = card.getAttribute('data-score');
+                if (score === '1') correctCount++;
+                if (!card.getAttribute('data-answered')) unansweredCount++;
+            });
+
+            const percentage = (correctCount / totalQuestions) * 100;
+            document.getElementById('score-text').innerText = `${correctCount}/${totalQuestions}`;
+
+            let comment = "";
+            if (percentage < 50) {
+                comment = "Điểm số lần này chưa đạt như ý muốn, con hãy mở từng câu xem kỹ phần giải thích chi tiết có sẵn và bấm làm lại bài tập để nhớ sâu cấu trúc nhé! ❤️";
+            } else if (percentage <= 80) {
+                comment = "Rất tốt! Con nắm được trật tự từ vựng và quy tắc chuyển đổi viết lại câu tương đương khá vững vàng. Rà soát lại câu sai để bứt phá điểm 10 nha con! ✨";
+            } else {
+                comment = "Tuyệt vời ông mặt trời! Con có tư duy sắp xếp đoạn văn văn bản học thuật và nhạy cảm cấu trúc ngữ pháp vô cùng thông minh. Phát huy phong độ đỉnh cao này nhé! 🎉🏆";
+            }
+
+            if (unansweredCount > 0) {
+                comment += `\n(Lưu ý con yêu: Vẫn còn lại ${unansweredCount} câu hỏi con chưa đưa ra quyết định lựa chọn đáp án đâu nhé!)`;
+            }
+
+            document.getElementById('comment-text').innerText = comment;
+            document.getElementById('result-modal').style.display = 'flex';
+
+            if (percentage >= 60) {
+                createConfetti();
+                setTimeout(createConfetti, 300);
+            }
+        }
+
+        function closeResultModal() {
+            document.getElementById('result-modal').style.display = 'none';
+        }
+
+        function CollegeRandom(min, max) { return Math.random() * (max - min) + min; }
+
+        // --- HIỆU ỨNG PHÁO HOA GIẤY CONFETTI CANVAS ---
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let confettis = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                confettis.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    r: CollegeRandom(6, 12),
+                    d: Math.random() * canvas.height,
+                    color: `hsl(${Math.random() * 360}, 100%, 60%)`,
+                    tilt: CollegeRandom(-10, 10),
+                    tiltAngleIncremental: CollegeRandom(-0.04, 0.04),
+                    tiltAngle: 0
+                });
+            }
+        }
+
+        function drawConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            confettis.forEach((c, index) => {
+                c.tiltAngle += c.tiltAngleIncremental;
+                c.y += (Math.cos(c.d) + 3 + c.r / 2) / 2;
+                c.x += Math.sin(c.tiltAngle);
+                c.tilt = Math.sin(c.tiltAngle - index / 3) * 15;
+
+                if (c.y > canvas.height) {
+                    confettis.splice(index, 1);
+                    return;
+                }
+
+                ctx.beginPath();
+                ctx.lineWidth = c.r / 2;
+                ctx.strokeStyle = c.color;
+                ctx.moveTo(c.x + c.tilt + c.r / 2, c.y);
+                ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r / 2);
+                ctx.stroke();
+            });
+            requestAnimationFrame(drawConfetti);
+        }
+        drawConfetti();
+    </script>
+</body>
+</html>
